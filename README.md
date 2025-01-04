@@ -1,1 +1,1 @@
-I will be creating a QR Code Generator without using a QR Code library. The goal is to use an image library and develop a deep enough understanding of QR codes to be able to generate QR codes using my own methods.
+I will be creating a QR Code Generator without using a QR Code library. The goal is to use an image library and develop a deep enough understanding of QR codes to be able to generate QR codes using the image library by transforming black rectangles on a white square to create a valid code.
