@@ -67,6 +67,26 @@ for pat in alignment_patterns:
         for j in range(pat[1], pat[1] + 5 * scale):
             occupied.add((i, j))
 # alignment patterns in occupied list
+
+# adding separators to occupied list
+#test = Image.new('1', (1 * scale, 1 * scale), 0) || test image
+# adding horizontal separators to occupied list
+horizontal_separators = [(0 * scale, 7 * scale), (size - 8 * scale, 7 * scale), (0 * scale, size - 8 * scale)]
+for sep in horizontal_separators:
+    for i in range(8):
+        i *= scale
+        print(sep[0] + i, sep[1])
+        occupied.add((sep[0] + i, sep[1]))
+        #img.paste(test, ((sep[0] + i, sep[1], sep[0] + i + 1 * scale, sep[1] + 1 * scale))) || tests separators
+# horizontal separators in occupied list
+# adding vertical separators to occupied list
+vertical_separators = [(7 * scale, 0 * scale), (7 * scale, size - 8 * scale), (size - 8 * scale, 0 * scale)]
+for sep in vertical_separators:
+    for i in range(8):
+        i *= scale
+        print(sep[0], sep[1] + i)
+        occupied.add((sep[0], sep[1] + i))
+        #img.paste(test, ((sep[0], sep[1] + i, sep[0] + 1 * scale, sep[1] + i + 1 * scale))) || tests separators
     
 
 # timing patterns
