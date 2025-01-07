@@ -163,6 +163,44 @@ while data_size:
         
     y -= scale
 # data size placed
+# adding data
+up = True
+for c in url:
+    bin_char = list(bin(ord(c))[2:].zfill(8))
+    while bin_char:
+        if up:
+            c1 = bin_char.pop(0)
+            if bin_char:
+                c2 = bin_char.pop(0)
+        else:
+            c2 = bin_char.pop(0)
+            if bin_char:
+                c1 = bin_char.pop(0)
+        left = (x - scale, y, x, y + scale)
+        right = (x, y, x + scale, y + scale)
+        if (x, y) in occupied:
+            if c1:
+                bin_char.insert(0, c1)
+        elif c1 and c1 == '1':
+            img.paste(black, right)#(x, y, x + scale, y + scale))
+        elif c1 and c1 == '0':
+            img.paste(white, right)#(x, y, x + scale, y + scale))
+        # left
+        if (x - scale, y) in occupied:
+            if c2:
+                bin_char.insert(0, c2)
+        elif c2 and c2 == '1':
+            img.paste(black, left)#(x - scale, y, x, y + scale))
+        elif c2 and c2 == '0':
+            img.paste(white, left)#(x - scale, y, x, y + scale))
+        # updating the next row to be filled (updating y)
+        y = y - scale if up else y + scale
+        if y < 0:
+            x -= scale * 2
+            up = False
+        elif y >= size:
+            x -= scale * 2
+            up = True
 '''
 for c in url:
     cha = bin(ord(c))[2:].zfill(8)
