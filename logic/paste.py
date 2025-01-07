@@ -42,29 +42,28 @@ alignment_pattern.paste(position_x, (1 * scale, 2 * scale, 2 * scale, 3 * scale)
 alignment_pattern.paste(position_x, (3 * scale, 2 * scale, 4 * scale, 3 * scale))
 
 # pasting alignment patterns onto image
-img.paste(alignment_pattern, (3 * scale, 19 * scale, 8 * scale, 24 * scale))
-img.paste(alignment_pattern, (19 * scale, 3 * scale, 24 * scale, 8 * scale))
-img.paste(alignment_pattern, (19 * scale, 19 * scale, 24 * scale, 24 * scale))
-img.paste(alignment_pattern, (19 * scale, 35 * scale, 24 * scale, 40 * scale))
-img.paste(alignment_pattern, (35 * scale, 19 * scale, 40 * scale, 24 * scale))
-img.paste(alignment_pattern, (35 * scale, 35 * scale, 40 * scale, 40 * scale))
+img.paste(alignment_pattern, (4 * scale, 20 * scale, 9 * scale, 25 * scale))
+img.paste(alignment_pattern, (20 * scale, 4 * scale, 25 * scale, 9 * scale))
+img.paste(alignment_pattern, (20 * scale, 20 * scale, 25 * scale, 25 * scale))
+img.paste(alignment_pattern, (20 * scale, 36 * scale, 25 * scale, 41 * scale))
+img.paste(alignment_pattern, (36 * scale, 20 * scale, 41 * scale, 25 * scale))
+img.paste(alignment_pattern, (36 * scale, 36 * scale, 41 * scale, 41 * scale))
 # alignment patterns placed
 
 # adding finder and alignment patterns to occupied list
 occupied = set()
-alignment_patterns = [(3 * scale, 19 * scale), (19 * scale, 3 * scale), (19 * scale, 19 * scale), (19 * scale, 35 * scale), (35 * scale, 19 * scale), (35 * scale, 35 * scale)]
+alignment_patterns = [(4 * scale, 20 * scale), (20 * scale, 4 * scale), (20 * scale, 20 * scale), (20 * scale, 36 * scale), (36 * scale, 20 * scale), (36 * scale, 36 * scale)]
 finder_patterns = [(0 * scale, 0 * scale), (0 * scale, size - 7 * scale), (size - 7 * scale, 0 * scale)]
 # adding finder patterns to occupied list
 for pat in finder_patterns:
-    for i in range(pat[0], pat[0] + 7 * scale):
-        for j in range(pat[1], pat[1] + 7 * scale):
+    for i in range(pat[0], pat[0] + 7 * scale, scale):
+        for j in range(pat[1], pat[1] + 7 * scale, scale):
             occupied.add((i, j))
 # finder patterns in occupied list
-
 # adding alignment patterns to occupied list
 for pat in alignment_patterns:
-    for i in range(pat[0], pat[0] + 5 * scale):
-        for j in range(pat[1], pat[1] + 5 * scale):
+    for i in range(pat[0], pat[0] + 5 * scale, scale):
+        for j in range(pat[1], pat[1] + 5 * scale, scale):
             occupied.add((i, j))
 # alignment patterns in occupied list
 
@@ -75,7 +74,6 @@ horizontal_separators = [(0 * scale, 7 * scale), (size - 8 * scale, 7 * scale), 
 for sep in horizontal_separators:
     for i in range(8):
         i *= scale
-        print(sep[0] + i, sep[1])
         occupied.add((sep[0] + i, sep[1]))
         #img.paste(test, ((sep[0] + i, sep[1], sep[0] + i + 1 * scale, sep[1] + 1 * scale))) || tests separators
 # horizontal separators in occupied list
@@ -84,12 +82,45 @@ vertical_separators = [(7 * scale, 0 * scale), (7 * scale, size - 8 * scale), (s
 for sep in vertical_separators:
     for i in range(8):
         i *= scale
-        print(sep[0], sep[1] + i)
         occupied.add((sep[0], sep[1] + i))
         #img.paste(test, ((sep[0], sep[1] + i, sep[0] + 1 * scale, sep[1] + i + 1 * scale))) || tests separators
     
-
+black = Image.new('1', (1 * scale, 1 * scale), 0)
+white = Image.new('1', (1 * scale, 1 * scale), 1)
+toggle = True
 # timing patterns
+# vertical timing pattern
+for i in range(8 * scale, size, scale):
+    if (6 * scale, i) in occupied:
+        toggle = False
+        continue
+    if toggle:
+        img.paste(black, (6 * scale, i, 7 * scale, i + 1 * scale))
+        toggle = False
+    else:
+        img.paste(white, (6 * scale, i, 7 * scale, i + 1 * scale))
+        toggle = True
+# horizontal timing pattern
+toggle = True     
+for i in range(8 * scale, size, scale):
+    if (i, 6 * scale) in occupied:
+        toggle = False
+        continue
+    if toggle:
+        img.paste(black, (i, 6 * scale, i + 1 * scale, 7 * scale))
+        toggle = False
+    else:
+        img.paste(white, (i, 6 * scale, i + 1 * scale, 7 * scale))
+        toggle = True
+# timing patterns placed
+
+# adding dark spot
+occupied.add((8 * scale, size - 8 * scale))
+img.paste(black, (8 * scale, size - 8 * scale, 9 * scale, size - 7 * scale))
+# dark spot placed
+
+# adding format strips
+
 
 '''
 while rmax <= maxx and rpmax <= pmax:
