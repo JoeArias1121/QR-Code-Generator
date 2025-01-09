@@ -119,12 +119,12 @@ img.paste(black, (8 * scale, size - 8 * scale, 9 * scale, size - 7 * scale))
 # dark spot placed
 
 # adding data storage (most important part)
-url = list('https://www.google.com') # placeholder link for development (meant to be dynamic with user input)
+url = list('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB') # placeholder link for development (meant to be dynamic with user input)
 data_format = list('0100')
 data_size = list(bin(len(url))[2:].zfill(8))
 x = size - scale
 y = size - scale
-
+'''
 # adding data format
 while data_format:
     c1 = data_format.pop(0)
@@ -163,14 +163,17 @@ while data_size:
         
     y -= scale
 # data size placed
+'''
 # adding data
 up = True
 for c in url:
     bin_char = list(bin(ord(c))[2:].zfill(8))
     while bin_char:
         if up:
+            print("c1 -> {b}".format(b = bin_char[0]))
             c1 = bin_char.pop(0)
             if bin_char:
+                print("c2 -> {b}".format(b = bin_char[0]))
                 c2 = bin_char.pop(0)
         else:
             c2 = bin_char.pop(0)
@@ -178,6 +181,7 @@ for c in url:
                 c1 = bin_char.pop(0)
         left = (x - scale, y, x, y + scale)
         right = (x, y, x + scale, y + scale)
+        # right
         if (x, y) in occupied:
             if c1:
                 bin_char.insert(0, c1)
@@ -188,7 +192,7 @@ for c in url:
         # left
         if (x - scale, y) in occupied:
             if c2:
-                bin_char.insert(0, c2)
+                bin_char.insert(1, c2)
         elif c2 and c2 == '1':
             img.paste(black, left)#(x - scale, y, x, y + scale))
         elif c2 and c2 == '0':
