@@ -201,9 +201,11 @@ for c in url:
         y = y - scale if up else y + scale
         if y < 0:
             x -= scale * 2
+            y = 0
             up = False
         elif y >= size:
             x -= scale * 2
+            y = size - scale
             up = True
 '''
 for c in url:
